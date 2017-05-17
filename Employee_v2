@@ -1,0 +1,118 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Employee {
+    public String extension;
+    public String name;
+    public String surname;
+
+
+    public Employee(){
+        this.surname="";
+        this.name="";
+        this.extension="";
+    }
+
+    public Employee(String surname, String name, String fatherName){
+        this.surname=surname;
+        this.name=name;
+        this.extension=fatherName;
+    }
+
+    public static class SurnameComparator implements Comparator<Employee> {
+
+        public int compare(Employee e1, Employee e2){
+            String e1Name = e1.getLastName();
+            String e2Name = e2.getLastName();
+            return e1Name.compareTo(e2Name);
+        }
+    }
+
+    public static class NameComparator implements Comparator<Employee> {
+
+        public int compare(Employee e1, Employee e2){
+            String e1Name = e1.getFirstName();
+            String e2Name = e2.getFirstName();
+            return e1Name.compareTo(e2Name);
+        }
+    }
+
+    public static class SurnameNameComparator implements Comparator<Employee> {
+
+        public int compare(Employee e1, Employee e2){
+            String e1Name = e1.getLastName()+ " " +e1.getFirstName();
+            String e2Name = e2.getLastName()+ " " +e2.getFirstName();
+            return e1Name.compareTo(e2Name);
+        }
+    }
+
+    public String getFirstName(){
+        return this.name;
+    }
+    public String getLastName(){
+        return this.surname;
+    }
+    public String getFatherName(){
+        return this.extension;
+    }
+    public String getFullName(){
+        return this.surname+" "+this.name+" "+this.extension;
+    }
+
+    public void setFirstName(String i){
+        this.name=i;
+    }
+    public void setLastName(String f){
+        this.surname=f;
+    }
+    public void setFatherName(String o){
+        this.extension=o;
+    }
+
+    public String toString(){
+        return  "\nFIO: "+getFullName();
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////
+    public static void main(String[] args){
+
+        Employee empl1 = new Employee();
+        empl1.surname=  "Ivanov";
+        empl1.name=     "Ivan";
+        empl1.extension="Ivanovich";
+        Employee empl2 = new Employee("Petrov","Petr","Petrovich");
+        Employee empl3 = new Employee("Sidorov","Sidor","Sidorovich");
+        Employee empl4 = new Employee("Pushkin","Alex","Segreevich");
+        Employee empl5 = new Employee("Petrov","Alex","Petrovich");
+        Employee empl6 = new Employee("Andreev","Andrey","Andreevich");
+
+        Employee[] emloyees ={empl1,empl2,empl3,empl4,empl5,empl6};
+
+        ArrayList<Employee> allEmloyee = new ArrayList<Employee>(20);
+
+        for(Employee empl: emloyees ){
+            allEmloyee.add(empl);
+        }
+
+        System.out.println("\nNot sorted: \n"+allEmloyee);
+
+        Comparator<Employee> filter1 = new SurnameComparator();
+        Comparator<Employee> filter2 = new SurnameNameComparator();
+        Comparator<Employee> filter3 = new SurnameComparator().thenComparing(new NameComparator());
+
+        Collections.sort(allEmloyee, filter1);
+        System.out.println("\nSorted by Surname: \n"+allEmloyee);
+
+        Collections.sort(allEmloyee, filter2);
+        System.out.println("\nSorted by Surname and Name: \n"+allEmloyee);
+
+        Collections.sort(allEmloyee, filter3);
+        System.out.println("\nSorted by Surname and after by Name: \n"+allEmloyee);
+
+    }
+
+}
+
+
+
