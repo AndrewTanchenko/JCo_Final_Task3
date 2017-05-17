@@ -1,0 +1,100 @@
+import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Employee implements Comparable  {
+    public String extension;
+    public String name;
+    public String surname;
+
+    //public static ArrayList<String> allEmloyee;
+
+    public Employee(){
+        this.surname="";
+        this.name="";
+        this.extension="";
+    }
+
+    public Employee(String surname, String name, String fatherName){
+        this.surname=surname;
+        this.name=name;
+        this.extension=fatherName;
+    }
+
+    @Override
+    public int compareTo(@NotNull Object o) {
+        Employee e2 = (Employee) o;
+        String e1Name = this.surname+ " " +this.name;
+        String e2Name = e2.getLastName()+ " " +e2.getFirstName();
+        return e1Name.compareTo(e2Name);
+    }
+
+    /*
+    public int compare(Object ob1, Object ob2){
+        Employee e1 = (Employee) ob1;
+        Employee e2 = (Employee) ob2;
+        String e1Name = e1.getLastName()+ " " +e1.getFirstName();
+        String e2Name = e2.getLastName()+ " " +e2.getFirstName();
+        return e1Name.compareTo(e2Name);
+    }
+    */
+
+    public String getFirstName(){
+        return this.name;
+    }
+    public String getLastName(){
+        return this.surname;
+    }
+    public String getFatherName(){
+        return this.extension;
+    }
+    public String getFullName(){
+        return this.surname+" "+this.name+" "+this.extension;
+    }
+
+    public void setFirstName(String i){
+        this.name=i;
+    }
+    public void setLastName(String f){
+        this.surname=f;
+    }
+    public void setFatherName(String o){
+        this.extension=o;
+    }
+
+    public String toString(){
+        return  "\nFIO: "+getFullName();
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////
+    public static void main(String[] args){
+
+        Employee empl1 = new Employee();
+        empl1.surname=  "Ivanov";
+        empl1.name=     "Ivan";
+        empl1.extension="Ivanovich";
+        Employee empl2 = new Employee("Petrov","Petr","Petrovich");
+        Employee empl3 = new Employee("Sidorov","Sidor","Sidorovich");
+        Employee empl4 = new Employee("Pushkin","Alex","Segreevich");
+        Employee empl5 = new Employee("Petrov","Alex","Petrovich");
+        Employee empl6 = new Employee("Andreev","Andrey","Andreevich");
+
+        Employee[] emloyees ={empl1,empl2,empl3,empl4,empl5,empl6};
+
+        ArrayList<Employee> allEmloyee = new ArrayList<Employee>(20);
+
+        for(Employee empl: emloyees ){
+            allEmloyee.add(empl);
+        }
+
+        System.out.println("Not sorted: \n"+allEmloyee);
+
+        Collections.sort(allEmloyee);
+        System.out.println("Sorted: \n"+allEmloyee);
+
+    }
+
+}
+
+
+
